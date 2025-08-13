@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import { MongoClient } from "mongodb";
 
 class dbClient {
     constructor() {
-        const queryString = "mongodb://admin:aTv5ZVEw0ZUtYM69j3@31.97.218.22:27017";
+        const queryString = `mongodb://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}`;
         this.client = new MongoClient(queryString);
         this.connectDB();
     }
