@@ -6,9 +6,9 @@ class mascotasController {
             const data = await mascotasModel.create(req.body);
 
             if (!data) {
-                return res.status(404).json({ message: 'Mascota no creada' });
+                return res.status(404).json({ status: 'Errorç≤', message: 'Mascota no creada' });
             }
-            res.status(201).json(data);
+            res.status(200).json(data);
         }
         catch (e) {
             res.status(500).send(e);
@@ -20,7 +20,7 @@ class mascotasController {
             const data = await mascotasModel.getAll()
 
             if (!data) {
-                return res.status(404).json({ message: 'Mascotas no encontradas' });
+                return res.status(404).json({ status: 'Ok', message: 'Mascotas no encontradas' });
             }
             res.status(200).json(data);
         }
@@ -31,10 +31,11 @@ class mascotasController {
 
     async getOne(req, res) {
         try {
-            const data = await mascotasModel.getOne(req.params.id);
+            const { id } = req.params;
+            const data = await mascotasModel.getOne(id);
 
             if (!data) {
-                return res.status(404).json({ message: 'Mascota no encontrada' });
+                return res.status(404).json({ status: 'Error', message: 'Mascota no encontrada' });
             }
             res.status(200).json(data);
         }
@@ -45,8 +46,9 @@ class mascotasController {
 
     async update(req, res) {
         try {
-            await mascotasModel.update(req.body);
-            res.status(200).json({ 'Status': 'Ok', 'Message': 'Mascota actualizada' });
+            const { id } = req.params;
+            await mascotasModel.update(id, req.body);
+            res.status(200).json({ status: 'Ok', message: 'Mascota actualizada correctamente' });
         }
         catch (e) {
             res.status(500).send(e);
@@ -55,7 +57,9 @@ class mascotasController {
 
     async delete(req, res) {
         try {
-            res.status(201).json({ status: 'delete-ok' })
+            const { id } = req.params;
+            await mascotasModel.delete(id);
+            res.status(200).json({ status: 'Ok', message: 'Mascota eliminada correctamente' })
         }
         catch (e) {
             res.status(500).send(e);

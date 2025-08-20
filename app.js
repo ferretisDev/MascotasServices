@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/mascotas', routeMascotas);
+app.use('/api/mascotas', routeMascotas);
 
 const PORT = process.env.PORT || 3000;
 
